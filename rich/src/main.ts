@@ -1,21 +1,25 @@
 const textNrea = document.querySelector("textarea") as HTMLTextAreaElement;
-const itensIConfiguracoes = document.querySelectorAll("i") 
-let contadorFontTamanho: number = 0;
+const itensIConfiguracoes = document.querySelectorAll("i");
+const isimparArray: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 interface Configuracoes {
-  textNegrito: (text: HTMLTextAreaElement,  tamanhoFont: string) => void
+  tamanhoFont: (text: HTMLTextAreaElement, configFont: string) => void;
+  textNegrito: (text: HTMLTextAreaElement, negrito: string) => void
 }
 
 const config: Configuracoes = {
-  textNegrito: (text: HTMLTextAreaElement, tamanhoFont: string) => {text.style.fontSize = tamanhoFont},
+  tamanhoFont: (text: HTMLTextAreaElement, tamanhoFont: string) => {
+    text.style.fontSize = tamanhoFont;
+  },
+  textNegrito:(text: HTMLTextAreaElement, negrito) => {
+    text.style.fontWeight = negrito
+  }
 };
 
-const { textNegrito } = config;
-
+const { tamanhoFont, textNegrito } = config;
 
 const pegarInputValue = (): void => {
   textNrea.addEventListener("input", () => {
-    console.log(textNrea.value);
     localStorage.setItem("dadosSalvos", textNrea.value);
   });
 };
@@ -25,18 +29,19 @@ const salvarDadosInputLocalStorage = (): void => {
   textNrea.value = `${recuperarDados}`;
 };
 
-
-const isimpar = (): void => {
-  ++contadorFontTamanho;
-  if (contadorFontTamanho % 2 !== 0) {
-    textNegrito(textNrea, "30px");
+const isimparTextNegritoEtamanho = (array: number[], number: number) => {
+  ++array[0];
+  if (array[number] % 2 !== 0) {
+    tamanhoFont(textNrea, "30px");
+    textNegrito(textNrea, "bolder");
   } else {
-    textNegrito(textNrea, "15px");
+    tamanhoFont(textNrea, "15px");
+    textNegrito(textNrea, "normal");
   }
 };
 
 itensIConfiguracoes[0].addEventListener("click", () => {
- isimpar();
+  isimparTextNegritoEtamanho(isimparArray, 0);
 });
 
 salvarDadosInputLocalStorage();

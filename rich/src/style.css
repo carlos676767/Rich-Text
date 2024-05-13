@@ -16,6 +16,7 @@ textarea {
   height: 300px;
   width: 500px;
   outline: none;
+  font-weight: bold;
 }
 
 textarea:hover{
